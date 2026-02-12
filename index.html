@@ -11,11 +11,9 @@ body {
     padding: 0;
     font-family: Arial, sans-serif;
     text-align: center;
-    overflow: hidden;
+    background: black;
     color: white;
-    background-size: cover;
-    background-position: center;
-    transition: background-image 2s ease-in-out;
+    overflow: hidden;
 }
 
 /* Screens */
@@ -31,21 +29,30 @@ body {
 
 #lockScreen {
     display: flex;
-    background: black;
 }
 
 /* Slideshow */
 #slideshow {
-    width: 80%;
+    width: 85%;
     max-width: 400px;
     border-radius: 20px;
-    box-shadow: 0 0 30px pink;
+    box-shadow: 0 0 40px pink;
     margin-top: 20px;
     opacity: 1;
-    transition: opacity 1s ease-in-out;
+    transition: opacity 2s ease-in-out;
 }
 
-/* Inputs */
+/* Romantic Text */
+#caption {
+    margin-top: 20px;
+    font-size: 18px;
+    width: 80%;
+    max-width: 400px;
+    opacity: 1;
+    transition: opacity 2s ease-in-out;
+}
+
+/* Input & Button */
 input {
     padding: 12px;
     font-size: 16px;
@@ -79,24 +86,23 @@ button {
 
 <body>
 
-<!-- LOCK SCREEN -->
+<!-- LOCK -->
 <div id="lockScreen">
     <h2>Enter Our Special Date ❤️</h2>
     <input type="password" id="password" placeholder="050325">
     <button onclick="checkPassword()">Unlock Our Love</button>
 </div>
 
-<!-- MAIN CONTENT -->
+<!-- MAIN -->
 <div id="mainContent">
     <h1>Zayan ❤️ Oma</h1>
-    <h2>O&Z Forever</h2>
     <img id="slideshow" src="pic1.JPG">
-    <h3>I love you more than words can ever explain.</h3>
+    <div id="caption">You are my favorite place in the world.</div>
 </div>
 
-<!-- Background Music -->
+<!-- Music (UPLOAD love.mp3 TO REPO) -->
 <audio id="bgMusic" loop>
-    <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Scott_Holmes_Music/Romantic_Piano/Scott_Holmes_Music_-_10_-_Romantic_Piano.mp3" type="audio/mpeg">
+    <source src="love.mp3" type="audio/mpeg">
 </audio>
 
 <script>
@@ -106,15 +112,29 @@ var images = [
 "pic6.JPG","pic7.jpg","pic8.JPG","pic9.JPG","pic10.JPG"
 ];
 
+var texts = [
+"You are my favorite place in the world.",
+"Every moment with you feels magical.",
+"I fall in love with you more every day.",
+"You are my peace, my happiness, my heart.",
+"Forever isn't long enough with you.",
+"Your smile is my weakness.",
+"You are the best thing in my life.",
+"My heart chose you and it will always choose you.",
+"With you, everything feels right.",
+"I love you more than words can ever explain."
+];
+
 var current = 0;
 
-/* PASSWORD */
 function checkPassword(){
     if(document.getElementById("password").value === "050325"){
         document.getElementById("lockScreen").style.display = "none";
         document.getElementById("mainContent").style.display = "flex";
 
-        document.getElementById("bgMusic").play();
+        // play music after user interaction
+        var music = document.getElementById("bgMusic");
+        music.play().catch(()=>{});
 
         startShow();
         startHearts();
@@ -123,27 +143,28 @@ function checkPassword(){
     }
 }
 
-/* SMOOTH SLIDESHOW + SYNC BACKGROUND */
 function startShow(){
     setInterval(function(){
 
         var img = document.getElementById("slideshow");
+        var caption = document.getElementById("caption");
 
         img.style.opacity = 0;
+        caption.style.opacity = 0;
 
         setTimeout(function(){
             current = (current + 1) % images.length;
 
             img.src = images[current];
-            document.body.style.backgroundImage = "url('" + images[current] + "')";
+            caption.innerText = texts[current];
 
             img.style.opacity = 1;
-        }, 1000);
+            caption.style.opacity = 1;
+        }, 2000);
 
-    }, 4000);
+    }, 7000); // slower & romantic
 }
 
-/* HEARTS */
 function startHearts(){
     setInterval(function(){
         var heart = document.createElement("div");
@@ -157,7 +178,7 @@ function startHearts(){
             heart.remove();
         }, 6000);
 
-    }, 500);
+    }, 700);
 }
 
 window.onload = function(){
